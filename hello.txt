@@ -1,2 +1,25 @@
-hello
-jasbbfajssldnlsd
+# checking whether it's working or not 
+import csv
+
+# Step 1: Read the data
+with open('customer_data.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    header = next(reader)  # Get the header row
+
+    seen = set()
+    unique_rows = []
+
+    # Step 2: Identify and store only unique rows
+    for row in reader:
+        row_tuple = tuple(row)  # Convert list to tuple so it can go into a set
+        if row_tuple not in seen:
+            seen.add(row_tuple)
+            unique_rows.append(row)
+
+# Step 3: Write clean data to a new file
+with open('clean_customer_data.csv', mode='w', newline='') as outfile:
+    writer = csv.writer(outfile)
+    writer.writerow(header)
+    writer.writerows(unique_rows)
+
+print("Duplicate rows removed successfully!")
